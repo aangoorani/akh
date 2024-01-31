@@ -21,6 +21,8 @@ services:
       - 33060:33060
     volumes:
       - db_volume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
 
 networks:
   monitor_network:
