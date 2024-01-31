@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  monitor_util:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - monitor_network
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+
+  database:
+    image: mysql:5.7.42 
+    networks:
+      - monitor_network
+    ports:
+      - 3306:3306
+      - 33060:33060
+    volumes:
+      - db_volume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:'1234'
+
+networks:
+  monitor_network:
+    driver: bridge
+
+volumes:
+  db_volume:
+    driver: local
+    driver_opts:
+      size: 50m
+  
