@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  monitor_util:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - monitor_network
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+
+  database:
+    image: mysql:5.7.42  # Corrected syntax here
+    networks:
+      - monitor_network
+    ports:
+      - 3306:3306
+      - 33060:33060
+    volumes:
+      - db_volume:/var/lib/mysql
+
+networks:
+  monitor_network:
+    driver: bridge
+
+volumes:
+  db_volume:
+  
